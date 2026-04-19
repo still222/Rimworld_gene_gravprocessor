@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+    <stkLowerPowerLevel>Downclock Processor</stkLowerPowerLevel>
+    <stkLowerPowerLevelDesc>Reduces power consumption and gene complexity.</stkLowerPowerLevelDesc>
+
+    <stkRaisePowerLevel>Overclock Processor</stkRaisePowerLevel>
+    <stkRaisePowerLevelDesc>Increases power consumption and gene complexity.</stkRaisePowerLevelDesc>
+</LanguageData>

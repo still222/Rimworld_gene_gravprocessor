@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  
+  <ThingDef ParentName="BuildingBase">
+    <defName>stk_GeneGravProcessor</defName>
+    <label>gene gravprocessor</label>
+    <description>This processor can be overclocked, providing a power of several gene processors in a single case.</description>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.4</fillPercent>
+    <pathCost>14</pathCost>
+    <rotatable>false</rotatable>
+    <graphicData>
+      <texPath>Things/Building/Misc/stk_GeneGravProcessor</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(2, 2)</drawSize>
+      <shadowData>
+        <volume>(1.5, 0.4, 1.5)</volume>
+      </shadowData>
+    </graphicData>
+    <size>(2, 2)</size>
+    <canOverlapZones>false</canOverlapZones>
+    <defaultPlacingRot>North</defaultPlacingRot>
+    <designationCategory>Biotech</designationCategory>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsMisc</li>
+    </thingCategories>
+    <uiOrder>2100</uiOrder>
+    <researchPrerequisites>
+      <li>GeneProcessor</li>
+      <li MayRequire="Ludeon.RimWorld.Odyssey">AdvancedGravtech</li>
+    </researchPrerequisites>
+    <descriptionHyperlinks>
+      <ThingDef>GeneAssembler</ThingDef>
+      <ThingDef>GeneBank</ThingDef>
+      <ThingDef>Genepack</ThingDef>
+      <ThingDef>Xenogerm</ThingDef>
+    </descriptionHyperlinks>
+    <statBases>
+      <MaxHitPoints>350</MaxHitPoints>
+      <WorkToBuild>9000</WorkToBuild>
+      <Mass>85</Mass>
+      <Flammability>0.5</Flammability>
+      <GeneticComplexityIncrease>0</GeneticComplexityIncrease>
+    </statBases>
+    <costList>
+      <Gravcore>1</Gravcore>
+      <Plasteel>100</Plasteel>
+      <Gold>25</Gold>
+    </costList>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+    <building>
+      <buildingTags>
+        <li>Biotech</li>
+      </buildingTags>
+      <workTableRoomRole>Laboratory</workTableRoomRole>
+    </building>
+    <placeWorkers>
+      <li>PlaceWorker_ShowFacilitiesConnections</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <comps>
+      <li Class="StkGeneGravProcessor.CompProperties_PowerLevel">
+        <PowerLevels>25</PowerLevels>
+        <ComplexityPerLevel>2</ComplexityPerLevel>
+        <firstLevelConsumption>50</firstLevelConsumption>
+        <ScalingEnabled>true</ScalingEnabled>
+      </li>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>50</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_InspectString">
+        <compClass>CompInspectStringGeneProcessor</compClass>
+        <inspectString>Gene complexity increase</inspectString>
+      </li>
+      <li Class="CompProperties_Facility">
+        <maxSimultaneous>100</maxSimultaneous>
+        <maxDistance>12.9</maxDistance>
+        <showMaxSimultaneous>false</showMaxSimultaneous>
+      </li>
+      <li Class="CompProperties_Glower">
+        <glowRadius>4</glowRadius>
+        <glowColor>(0,218,255,0)</glowColor>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

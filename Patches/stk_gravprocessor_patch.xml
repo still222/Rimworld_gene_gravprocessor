@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Defs/ThingDef[defName="GeneAssembler"]/comps/li[@Class="CompProperties_AffectedByFacilities"]/linkableFacilities</xpath>
+    <value>
+      <li>stk_GeneGravProcessor</li>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationInsert">
+    <xpath>/Defs/ThingDef[defName="GeneAssembler"]/descriptionHyperlinks/ThingDef[text()="GeneProcessor"]</xpath>
+    <order>Append</order>
+    <value>
+      <ThingDef>stk_GeneGravProcessor</ThingDef>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/StatDef[defName="GeneticComplexityIncrease"]</xpath>
+    <value>
+      <parts>
+        <li Class="StkGeneGravProcessor.StatPart_GravComplexity"/>
+      </parts>
+    </value>
+  </Operation>
+
+</Patch>
