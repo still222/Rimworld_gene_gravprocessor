@@ -1,8 +1,0 @@
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\stk_gene_gravprocessor\Assemblies\StkGeneGravProcessor.dll
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\stk_gene_gravprocessor\Source\StkGeneGravProcessor\obj\Debug\StkGeneGravProcessor.csproj.AssemblyReference.cache
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\stk_gene_gravprocessor\Source\StkGeneGravProcessor\obj\Debug\StkGeneGravProcessor.GeneratedMSBuildEditorConfig.editorconfig
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\stk_gene_gravprocessor\Source\StkGeneGravProcessor\obj\Debug\StkGeneGravProcessor.AssemblyInfoInputs.cache
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\stk_gene_gravprocessor\Source\StkGeneGravProcessor\obj\Debug\StkGeneGravProcessor.AssemblyInfo.cs
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\stk_gene_gravprocessor\Source\StkGeneGravProcessor\obj\Debug\StkGeneGravProcessor.csproj.CoreCompileInputs.cache
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\stk_gene_gravprocessor\Source\StkGeneGravProcessor\obj\Debug\StkGeneGravProcessor.dll
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\stk_gene_gravprocessor\Source\StkGeneGravProcessor\obj\Debug\StkGeneG.91345852.Up2Date
