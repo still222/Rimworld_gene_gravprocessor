@@ -24,4 +24,37 @@
     </value>
   </Operation>
 
+  <!--No odyssey patch-->
+  <Operation Class="PatchOperationFindMod">
+    <mods>
+      <li>Odyssey</li>
+    </mods>
+    <nomatch Class="PatchOperationSequence">
+      <operations>
+        <li Class="PatchOperationReplace">
+          <xpath>/Defs/ThingDef[defName="stk_GeneGravProcessor"]/costList/Gravcore</xpath>
+          <value>
+            <ComponentSpacer>6</ComponentSpacer>
+          </value>
+        </li>
+
+        <li Class="PatchOperationReplace">
+          <xpath>/Defs/ThingDef[defName="stk_GeneGravProcessor"]/label</xpath>
+          <value>
+            <label>advanced gene processor</label>
+          </value>
+        </li>
+
+        <li Class="PatchOperationReplace">
+          <xpath>/Defs/ThingDef[defName="stk_GeneGravProcessor"]/researchPrerequisites</xpath>
+          <value>
+            <researchPrerequisites>
+              <li>Archogenetics</li>
+            </researchPrerequisites>
+          </value>
+        </li>
+      </operations>
+    </nomatch>
+  </Operation>
+
 </Patch>
