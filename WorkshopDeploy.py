@@ -1,6 +1,7 @@
 import os
 import shutil
 import msvcrt
+import traceback
 
 def main():
 	# Current working directory = mod root
@@ -27,20 +28,6 @@ def main():
 		msvcrt.getch()
 		return
 
-	# Check if target exists
-	if os.path.exists(target_path):
-		while True:
-			choice = input(f"Mod '{target_name}' already exists. Overwrite? (y/n): ").strip().lower()
-			if choice in ("y", "yes"):
-				print("Removing existing mod folder...")
-				shutil.rmtree(target_path)
-				break
-			elif choice in ("n", "no"):
-				print("Operation cancelled.")
-				return
-			else:
-				print("Please enter 'y' or 'n'.")
-
 	# Ignore function
 	def ignore_filter(dir, contents):
 		ignored = []
@@ -55,7 +42,7 @@ def main():
 				ignored.append(item)
 
 			# Ignore .gitignore only in root
-			elif item == ".gitignore" and dir == root_path:
+			elif item == ".gitignore":
 				ignored.append(item)
 
 			# Ignore all .py files
@@ -63,6 +50,10 @@ def main():
 				ignored.append(item)
 
 		return ignored
+
+	if os.path.exists(target_path):
+		print("Target exists, removing...")
+		shutil.rmtree(target_path)
 
 	print("Copying files...")
 	shutil.copytree(
@@ -72,7 +63,11 @@ def main():
 	)
 
 	print("Done!")
-	msvcrt.getch()
 
 if __name__ == "__main__":
-	main()
+	try:
+		main()
+	except Exception:
+		traceback.print_exc()
+		print("\nPress Enter to exit...")
+		msvcrt.getch()
