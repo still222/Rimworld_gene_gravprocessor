@@ -1,17 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Multiplayer.API;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace StkGeneGravProcessor;
 
 public class CompPowerLevel : ThingComp
 {
-	public CompProperties_PowerLevel Props => (CompProperties_PowerLevel)props;
-	public int PowerLevel = 1;
 	private CompPowerTrader powerComp;
+	public int PowerLevel = 1;
+	public CompProperties_PowerLevel Props => (CompProperties_PowerLevel)props;
 	public virtual float PowerUsage => Props.firstLevelConsumption * PowerLevel * PowerScaling;
 	public virtual float PowerScaling => Props.ScalingEnabled ? (float)Math.Pow(1.025, PowerLevel - 1) : 1f;
 	public int ComplexityBonus => Props.ComplexityPerLevel * PowerLevel;
@@ -22,6 +24,7 @@ public class CompPowerLevel : ThingComp
 		powerComp = parent.GetComp<CompPowerTrader>();
 		UpdatePower();
 	}
+
 	public override void PostExposeData()
 	{
 		base.PostExposeData();
@@ -43,53 +46,90 @@ public class CompPowerLevel : ThingComp
 		if (!IsFirstSelectedProcessor())
 			yield break;
 
-		if (powerComp != null)
+		// Collect all selected gravprocessors with this comp
+		var comps = Find.Selector.SelectedObjects
+			.OfType<Building>()
+			.Select(b => b.GetComp<CompPowerLevel>())
+			.Where(c => c != null)
+			.ToList();
+
+		if (powerComp != null && comps.Count > 0)
 		{
 			yield return new Command_Action
 			{
-				action = DropLevel,
+				action = () => DropLevel(comps),
 				defaultLabel = "stkLowerPowerLevel".Translate(),
 				defaultDesc = "stkLowerPowerLevelDesc".Translate(),
 				icon = ContentFinder<Texture2D>.Get("UI/Commands/TempLower")
 			};
+
 			yield return new Command_Action
 			{
-				action = RaiseLevel,
+				action = () => RaiseLevel(comps),
 				defaultLabel = "stkRaisePowerLevel".Translate(),
 				defaultDesc = "stkRaisePowerLevelDesc".Translate(),
 				icon = ContentFinder<Texture2D>.Get("UI/Commands/TempRaise")
 			};
+
 		}
+	
 		yield break;
 	}
 
-	[SyncMethod(SyncContext.None)]
-	public void RaiseLevel()
-	{
-		if (PowerLevel < Props.PowerLevels)
-		{
-			PowerLevel++;
-			UpdatePower();
-		}
-	}
-	[SyncMethod(SyncContext.None)]
-	public void DropLevel()
-	{
-		if (PowerLevel > 1)
-		{
-			PowerLevel--;
-			UpdatePower();
-		}
-	}
 	private bool IsFirstSelectedProcessor()
 	{
 		foreach (var selected in Find.Selector.SelectedObjects)
-		{
 			if (selected is Building building && building.GetComp<CompPowerLevel>() != null)
 				return building == parent; // true if this is the first
-		}
+
 		return false;
 	}
+
+	protected void ThrowCurrentOverclockText()
+	{
+		MoteMaker.ThrowText(
+			parent.TrueCenter() + new Vector3(0.5f, 0f, 0.5f),
+			parent.Map,
+			ComplexityBonus.ToString("+0;-0;0"),
+			Color.white
+		);
+
+	}
+
+	[SyncMethod]
+	public static void RaiseLevel(List<CompPowerLevel> list)
+	{
+		SoundDefOf.DragSlider.PlayOneShotOnCamera();
+		foreach (var comp in list)
+		{
+			if (comp.PowerLevel < comp.Props.PowerLevels)
+			{
+				comp.PowerLevel++;
+				comp.UpdatePower();
+			}
+			
+			comp.ThrowCurrentOverclockText();
+		}
+
+	}
+
+	[SyncMethod]
+	public static void DropLevel(List<CompPowerLevel> list)
+	{
+		SoundDefOf.DragSlider.PlayOneShotOnCamera();
+		foreach (var comp in list)
+		{
+			if (comp.PowerLevel > 1)
+			{
+				comp.PowerLevel--;
+				comp.UpdatePower();
+			}
+			
+			comp.ThrowCurrentOverclockText();
+		}
+
+	}
+
 }
 
 public class CompProperties_PowerLevel : CompProperties
@@ -103,4 +143,5 @@ public class CompProperties_PowerLevel : CompProperties
 	{
 		compClass = typeof(CompPowerLevel);
 	}
+
 }

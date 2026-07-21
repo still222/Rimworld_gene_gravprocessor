@@ -5,4 +5,6 @@
 
     <stkRaisePowerLevel>Overclock Processor</stkRaisePowerLevel>
     <stkRaisePowerLevelDesc>Increases power consumption and gene complexity.</stkRaisePowerLevelDesc>
+
+    <stkGravProcStatExplanation>Grav Processor bonus: +{0}</stkGravProcStatExplanation>
 </LanguageData>
