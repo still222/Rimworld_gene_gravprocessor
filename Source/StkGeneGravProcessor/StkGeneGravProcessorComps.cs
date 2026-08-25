@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Multiplayer.API;
 using RimWorld;
 using UnityEngine;
@@ -15,7 +13,7 @@ public class CompPowerLevel : ThingComp
 	public int PowerLevel = 1;
 	public CompProperties_PowerLevel Props => (CompProperties_PowerLevel)props;
 	public virtual float PowerUsage => Props.firstLevelConsumption * PowerLevel * PowerScaling;
-	public virtual float PowerScaling => Props.ScalingEnabled ? (float)Math.Pow(1.025, PowerLevel - 1) : 1f;
+	public virtual float PowerScaling => Props.ScalingEnabled ? Mathf.Pow(1.025f, PowerLevel - 1) : 1f;
 	public int ComplexityBonus => Props.ComplexityPerLevel * PowerLevel;
 
 	public override void PostSpawnSetup(bool respawningAfterLoad)
@@ -35,9 +33,7 @@ public class CompPowerLevel : ThingComp
 	private void UpdatePower()
 	{
 		if (powerComp != null)
-		{
 			powerComp.PowerOutput = -PowerUsage;
-		}
 	}
 
 	public override IEnumerable<Gizmo> CompGetGizmosExtra()
@@ -47,11 +43,19 @@ public class CompPowerLevel : ThingComp
 			yield break;
 
 		// Collect all selected gravprocessors with this comp
-		var comps = Find.Selector.SelectedObjects
-			.OfType<Building>()
-			.Select(b => b.GetComp<CompPowerLevel>())
-			.Where(c => c != null)
-			.ToList();
+		var comps = new List<CompPowerLevel>();
+
+		foreach (var obj in Find.Selector.SelectedObjects)
+		{
+			if (obj is Building building)
+			{
+				var comp = building.GetComp<CompPowerLevel>();
+				if (comp != null)
+				{
+					comps.Add(comp);
+				}
+			}
+		}
 
 		if (powerComp != null && comps.Count > 0)
 		{
